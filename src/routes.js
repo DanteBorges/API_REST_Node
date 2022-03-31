@@ -1,20 +1,27 @@
 import { Router } from "express";
 
-import HelloController from "./controllers/HelloController";
-import UsersControllers from "./controllers/UsersControllers";
+import auth from "./middlewares/auth";
+
+import SessionsController from "./controllers/SessionsController";
+import UsersController from "./controllers/UsersController";
+import RepositoriesController from "./controllers/RepositoriesController";
+ 
+const routes = new Router();
+
+routes.post('/sessions',SessionsController.create)
+
+routes.use(auth)
 
 
-const routes = new Router()
+routes.get("/users", UsersController.index);
+routes.get("/users/:id", UsersController.show);
+routes.post("/users", UsersController.create);
+routes.put("/users/:id", UsersController.update);
+routes.delete("/users/:id", UsersController.destroy);
 
-routes.get ('/hello',HelloController.index)
-
-routes.get('/users',UsersControllers.index)
-routes.get('/users/:id',UsersControllers.show)
-routes.post('/users',UsersControllers.create)
-routes.put('/users/:id',UsersControllers.update)
-routes.delete('/users/:id',UsersControllers.destroy)
+routes.get("/users/:user_id/repositories", RepositoriesController.index);
+routes.post("/users/:user_id/repositories", RepositoriesController.create);
+routes.delete("/users/:user_id/repositories", RepositoriesController.destroy);
 
 
 export default routes;
-
-

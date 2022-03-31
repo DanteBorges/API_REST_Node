@@ -1,5 +1,4 @@
-import { restart } from "nodemon";
-import User from "../models/Users";
+import User from "../models/User";
 import { createPasswordHash } from "../services/auth";
 
 class UsersController {
@@ -83,7 +82,6 @@ class UsersController {
       }
       await user.deleteOne();
       return res.status(200).json;
-
     } catch (err) {
       console.error(err);
       return res.status(500).json({ error: "Internal server error." });
